@@ -1,3 +1,22 @@
+module.exports = {
+    networks: {
+        development: {
+            host: "127.0.0.1",
+            port: 7545,
+            network_id: "*"
+        }
+    },
+    compilers: {
+        solc: {
+            version: "0.8.0"
+        }
+    }
+};
+
+
+
+
+
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -46,7 +65,7 @@
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 
-module.exports = {
+//module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
    * defaults web3 uses to send transactions. If you don't specify one truffle
@@ -57,7 +76,7 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
-  networks: {
+  //networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache, geth, or parity) in a separate terminal
@@ -96,17 +115,17 @@ module.exports = {
     //   network_id: 2111,   // This network is yours, in the cloud.
     //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
-  },
+  //},
 
   // Set default mocha options here, use special reporters, etc.
-  mocha: {
+  //mocha: {
     // timeout: 100000
-  },
+  //},
 
   // Configure your compilers
-  compilers: {
-    solc: {
-      version: "0.8.21",      // Fetch exact version from solc-bin (default: truffle's version)
+  //compilers: {
+    //solc: {
+      //version: "0.8.21",      // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -115,8 +134,8 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
-  },
+    //}
+  //},
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:
   // false to enabled: true. The default storage location can also be
@@ -138,4 +157,4 @@ module.exports = {
   //     }
   //   }
   // }
-};
+//};
