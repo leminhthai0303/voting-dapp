@@ -1,38 +1,97 @@
-.App {
+/* App Container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Page Title */
+.title {
+  color: #2c3e50;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Success and Error Messages */
+.successMessage {
+  color: green;
+  margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.errorMessage {
+  color: red;
+  margin-bottom: 20px;
+}
+
+/* Form Section */
+.form {
+  margin-bottom: 30px;
+}
+
+/* Input for Candidate Name */
+.input {
+  padding: 10px;
+  width: 60%;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Button Styles */
+.button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #2980b9;
+}
+
+/* Vote Button Style */
+.voteButton {
+  padding: 5px 15px;
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: background-color 0.3s;
+}
+
+.voteButton:hover {
+  background-color: #27ae60;
+}
+
+/* Disabled Buttons */
+.button:disabled,
+.voteButton:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Candidates List Section */
+.candidatesList {
+  margin-top: 20px;
+}
+
+/* Candidate List Style */
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.listItem {
+  background-color: #ecf0f1;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

@@ -13831,12 +13831,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xbc4B83C083f7184c408AF2708329A9C3A3a10467",
-      "transactionHash": "0xef8ea748463dd25c0d3a90fa66a97fd4a421099541ff83a86492a35c3f41f620"
+      "address": "0xbCDB31a44cF5dC46D771e12965f73CAd8812ca4e",
+      "transactionHash": "0xb3570686dfd82df0ce00b8946e0c7663f6d5c388db9ecfbfe062da0a67aeca5a"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-08-27T14:18:30.162Z",
+  "updatedAt": "2024-08-27T15:26:30.909Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
