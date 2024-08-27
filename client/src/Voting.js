@@ -1,5 +1,5 @@
 import web3 from './web3';
-import Voting from '../../build/contracts/Voting.json';
+import Voting from './Voting.json';
 
 const networkId = await web3.eth.net.getId();
 const deployedNetwork = Voting.networks[networkId];
