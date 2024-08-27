@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import web3 from './web3';
 import contract from './Voting';
+import './App.css';  // Import the CSS file
 
 function App() {
   const [candidates, setCandidates] = useState([]);
   const [newCandidate, setNewCandidate] = useState('');
   const [account, setAccount] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const loadCandidates = async () => {
+      setLoading(true);
       try {
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
@@ -20,6 +24,7 @@ function App() {
         console.error('Error loading candidates:', error);
         setErrorMessage('Error loading candidates.');
       }
+      setLoading(false);
     };
 
     loadCandidates();
@@ -27,52 +32,86 @@ function App() {
 
   const addCandidate = async () => {
     setErrorMessage('');
+    setSuccessMessage('');
+    setLoading(true);
     try {
       await contract.methods.addCandidate(newCandidate).send({ from: account });
-      const candidates = await contract.methods.getCandidates().call();
-      setCandidates(candidates);
+
+      const updatedCandidates = await contract.methods.getCandidates().call();
+      setCandidates(updatedCandidates);
       setNewCandidate('');
+      setSuccessMessage('Candidate added successfully!');
     } catch (error) {
       console.error('Error adding candidate:', error);
-      setErrorMessage('Error adding candidate. Make sure you are privileged to add candidates.');
+      setErrorMessage('Error adding candidate. You may not be privileged.');
     }
+    setLoading(false);
   };
 
   const vote = async (id) => {
     setErrorMessage('');
+    setSuccessMessage('');
+    setLoading(true);
     try {
       await contract.methods.vote(id).send({ from: account });
-      const candidates = await contract.methods.getCandidates().call();
-      setCandidates(candidates);
+
+      const updatedCandidates = await contract.methods.getCandidates().call();
+      setCandidates(updatedCandidates);
+      setSuccessMessage('Vote cast successfully!');
     } catch (error) {
       console.error('Error voting:', error);
       setErrorMessage('Error casting vote. You may have already voted or are not privileged.');
     }
+    setLoading(false);
   };
 
   return (
-    <div>
-      <h1>Voting DApp</h1>
+    <div className="container">
+      <h1 className="title">Voting DApp</h1>
 
-      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+      {/* Display success and error messages */}
+      {successMessage && <div className="successMessage">{successMessage}</div>}
+      {errorMessage && <div className="errorMessage">{errorMessage}</div>}
 
-      <h2>Add a Candidate</h2>
-      <input 
-        value={newCandidate} 
-        onChange={e => setNewCandidate(e.target.value)} 
-        placeholder="Candidate name" 
-      />
-      <button onClick={addCandidate}>Add Candidate</button>
+      {/* Form to add a new candidate */}
+      <div className="form">
+        <h2>Add a New Candidate</h2>
+        <input
+          type="text"
+          value={newCandidate}
+          onChange={(e) => setNewCandidate(e.target.value)}
+          placeholder="Enter candidate name"
+          className="input"
+        />
+        <button onClick={addCandidate} className="button" disabled={loading}>
+          {loading ? 'Adding...' : 'Add Candidate'}
+        </button>
+      </div>
 
-      <h2>Current Candidates</h2>
-      <ul>
-        {candidates.map((candidate, index) => (
-          <li key={index}>
-            {candidate.name} - {candidate.voteCount} votes
-            <button onClick={() => vote(candidate.id)}>Vote</button>
-          </li>
-        ))}
-      </ul>
+      {/* List of candidates */}
+      <div className="candidatesList">
+        <h2>Current Candidates</h2>
+        {loading ? (
+          <p>Loading candidates...</p>
+        ) : candidates.length > 0 ? (
+          <ul className="list">
+            {candidates.map((candidate, index) => (
+              <li key={index} className="listItem">
+                {`ID: ${candidate.id} | Name: ${candidate.name} | Votes: ${candidate.voteCount}`}
+                <button
+                  onClick={() => vote(candidate.id)}
+                  className="voteButton"
+                  disabled={loading}
+                >
+                  {loading ? 'Voting...' : 'Vote'}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No candidates available.</p>
+        )}
+      </div>
     </div>
   );
 }
