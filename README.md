@@ -24,8 +24,6 @@ git clone git@github.com:leminhthai0303/voting-dapp.git
 
 ```
 
-Replace `<repository-url>` with the URL of your project repository.
-
 ### 2. Compile and Migrate Smart Contracts
 
 Navigate to the project directory:
