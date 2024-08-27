@@ -1,7 +1,14 @@
 import web3 from './web3';
-import Voting from './Voting.json';
+import Voting from '../../build/contracts/Voting.json';
 
-const contractAddress = '0x4c34e3EbD029cbF2a6b502F4024b0B69eb93e5a8';
+const networkId = await web3.eth.net.getId();
+const deployedNetwork = Voting.networks[networkId];
+const contractAddress = deployedNetwork && deployedNetwork.address;
+
+if (!contractAddress) {
+  throw new Error("Contract not deployed to the current network");
+}
+
 const contract = new web3.eth.Contract(Voting.abi, contractAddress);
 
 export default contract;

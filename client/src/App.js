@@ -6,35 +6,55 @@ function App() {
   const [candidates, setCandidates] = useState([]);
   const [newCandidate, setNewCandidate] = useState('');
   const [account, setAccount] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const loadCandidates = async () => {
-      const accounts = await web3.eth.getAccounts();
-      setAccount(accounts[0]);
+      try {
+        const accounts = await web3.eth.getAccounts();
+        setAccount(accounts[0]);
 
-      const candidates = await contract.methods.getCandidates().call();
-      setCandidates(candidates);
+        const candidates = await contract.methods.getCandidates().call();
+        setCandidates(candidates);
+      } catch (error) {
+        console.error('Error loading candidates:', error);
+        setErrorMessage('Error loading candidates.');
+      }
     };
 
     loadCandidates();
   }, []);
 
   const addCandidate = async () => {
-    await contract.methods.addCandidate(newCandidate).send({ from: account });
-    const candidates = await contract.methods.getCandidates().call();
-    setCandidates(candidates);
-    setNewCandidate('');
+    setErrorMessage('');
+    try {
+      await contract.methods.addCandidate(newCandidate).send({ from: account });
+      const candidates = await contract.methods.getCandidates().call();
+      setCandidates(candidates);
+      setNewCandidate('');
+    } catch (error) {
+      console.error('Error adding candidate:', error);
+      setErrorMessage('Error adding candidate. Make sure you are privileged to add candidates.');
+    }
   };
 
   const vote = async (id) => {
-    await contract.methods.vote(id).send({ from: account });
-    const candidates = await contract.methods.getCandidates().call();
-    setCandidates(candidates);
+    setErrorMessage('');
+    try {
+      await contract.methods.vote(id).send({ from: account });
+      const candidates = await contract.methods.getCandidates().call();
+      setCandidates(candidates);
+    } catch (error) {
+      console.error('Error voting:', error);
+      setErrorMessage('Error casting vote. You may have already voted or are not privileged.');
+    }
   };
 
   return (
     <div>
       <h1>Voting DApp</h1>
+
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
       <h2>Add a Candidate</h2>
       <input 
